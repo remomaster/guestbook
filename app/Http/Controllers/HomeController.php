@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $blog = App\Blogeintrag::whereUser_id(Auth::id())->simplePaginate(5);
+        $blog = App\Blogeintrag::whereUser_id(Auth::id())->orderByDesc('created_at')->simplePaginate(5);
         return view('home', [
             'blogeintrags' => $blog
         ]);

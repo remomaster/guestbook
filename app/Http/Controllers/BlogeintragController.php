@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Blogeintrag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogeintragController extends Controller
 {
@@ -34,7 +35,7 @@ class BlogeintragController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog.create');
     }
 
     /**
@@ -45,7 +46,13 @@ class BlogeintragController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $valiBlog = $request->validate([
+            'titel' => ['required', 'min:3', 'max:50'],
+            'inhalt' => ['required', 'min:5', 'max:500']
+        ]);
+        $new_blog = Blogeintrag::make($valiBlog);
+        Auth::user()->blogeintraege()->save($new_blog);
+        return redirect('home');
     }
 
     /**

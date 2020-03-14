@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function (Request $request) {
-    $blog = App\Blogeintrag::simplePaginate(5);
+    $blog = App\Blogeintrag::orderByDesc('created_at')->simplePaginate(5);
     return view('welcome', [
         'blogeintrags' => $blog
     ]);
