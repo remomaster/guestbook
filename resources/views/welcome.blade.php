@@ -12,7 +12,7 @@
                 @slot('titel') {{ $blogeintrag->titel }} @endslot
                 @slot('date') {{ $blogeintrag->created_at->format('d-m-Y') }} @endslot
                 @slot('inhalt') {{ $blogeintrag->inhalt }} @endslot           
-                @slot('autor') {{ $blogeintrag->autor->name }} @endslot           
+                @slot('autor') {{ $blogeintrag->autor()->withTrashed()->first()->name }} @endslot           
             @endcomponent
         @endforeach
         {{ $blogeintrags->currentPage() }} / {{ ceil(App\Blogeintrag::all()->count()/5) }}

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use App\User;
+use App\Role;
 
 class UserController extends Controller
 {
@@ -41,7 +43,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        
+        return view('user.edit',[
+            'euser' => $user,
+            'roles' => Role::all()
+        ]);
     }
 
     /**
@@ -53,7 +58,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        
+        $valiUser = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'nachname' => ['required', 'string', 'max:255'],
+            'geburtstag' => ['required'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'geschlecht'=> ['required', Rule::in(['Mann','Frau'])],
+            'role' => ['required', 'min:1', 'max:3' ]
+        ]);
+        $user->fill($valiUser);
+        $user->save();
+
+        return redirect('user');
     }
 
     /**
@@ -64,6 +80,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect('user');
     }
 }

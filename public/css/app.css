@@ -105,6 +105,23 @@ hr {
   text-transform: uppercase;
 }
 
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 5px;
+}
+
+#fakeLink {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: rgb(207, 16, 16);
+  cursor: pointer;
+}
+
 .page-link {
   color: #636b6f;
   padding: 0 25px;

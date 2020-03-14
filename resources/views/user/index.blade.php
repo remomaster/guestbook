@@ -17,10 +17,12 @@
                             <th>Geschlecht</th>
                             <th>Registriert</th>
                             <th>Rechte</th>
+                            <th></th>
                             </th>
                         </tr>
                         @foreach ($users as $user)
                         @component('com.usereintrag')    
+                            @slot('user') {{ $user->id }} @endslot        
                             @slot('name') {{ $user->name }} @endslot        
                             @slot('nachname') {{ $user->nachname }} @endslot        
                             @slot('email') {{ $user->email }} @endslot        
