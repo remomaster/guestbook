@@ -24,9 +24,11 @@ Route::get('home', 'HomeController@index')->name('home');
 
 Route::resource('blogeintrag', 'BlogeintragController');
 
-Route::resource('user', 'UserController')->only([
-    'index',
-    'edit', 
-    'update',
-    'destroy'
-]);
+Route::middleware('can:isAdmin')->group(function(){
+    Route::resource('user', 'UserController')->only([
+        'index',
+        'edit', 
+        'update',
+        'destroy'
+    ]);
+});

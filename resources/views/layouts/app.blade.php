@@ -59,7 +59,9 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
                                     <a class="dropdown-item" href="{{ url('home') }}">Mein Blog</a>
                                     <a class="dropdown-item" href="{{ route('blogeintrag.create') }}">Neuer Eintrag</a>
+                                    @can('isAdmin')
                                     <a class="dropdown-item" href="{{ url('user') }}">User</a>
+                                    @endcan
                                 </div>
                             </li>
                         @endguest

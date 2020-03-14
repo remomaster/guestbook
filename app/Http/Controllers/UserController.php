@@ -20,7 +20,6 @@ class UserController extends Controller
     public function __construct()
     {        
         $this->middleware('auth');
-        $this->middleware('isAdmin');
     }
 
     /**
@@ -66,9 +65,12 @@ class UserController extends Controller
             'geschlecht'=> ['required', Rule::in(['Mann','Frau'])],
             'role' => ['required', 'min:1', 'max:3' ]
         ]);
+        
         $user->fill($valiUser);
+        if($user->role->id !== $valiUser['role']){
+            $user->role()->associate(Role::find($valiUser['role']));
+        }
         $user->save();
-
         return redirect('user');
     }
 
