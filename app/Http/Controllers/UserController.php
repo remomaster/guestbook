@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use App\User;
 use App\Role;
@@ -29,6 +30,8 @@ class UserController extends Controller
      */
     public function index()
     {        
+        Log::info('User '.Auth::id().' betritt die Userseite');
+
         return view('user.index',[
             'users' => User::all()
         ]);
@@ -42,6 +45,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        Log::info('User '.Auth::id().' bearbeitet User '.$user->id);
+
         return view('user.edit',[
             'euser' => $user,
             'roles' => Role::all()
@@ -57,6 +62,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        Log::info('User '.Auth::id().' updated User '.$user->id);
+
         $valiUser = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'nachname' => ['required', 'string', 'max:255'],
